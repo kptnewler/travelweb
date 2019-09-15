@@ -48,9 +48,8 @@ public class UserServiceImpl implements UserService {
             return UserStatus.USER_NOT_EXISTS;
         }
 
-        User user = userDao.findUserByPassword(username, password);
-        if (user == null) {
-            return UserStatus.USER_OR_PASSWORD;
+        if (userDao.findUserByPassword(username, password) == null) {
+            return UserStatus.USER_PASSWORD_ERROR;
         }
 
         return UserStatus.LOGIN_SUCCEED;

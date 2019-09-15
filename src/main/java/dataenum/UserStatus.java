@@ -1,8 +1,8 @@
 package dataenum;
 
 public @interface UserStatus {
-    // 用户名或密码错误
-    int USER_OR_PASSWORD = -1;
+    // 密码错误
+    int USER_PASSWORD_ERROR = -1;
 
     // 用户找不到
     int USER_NOT_EXISTS = -2;

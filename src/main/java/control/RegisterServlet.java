@@ -50,7 +50,6 @@ public class RegisterServlet extends HttpServlet {
                 result = new Result<>();
                 break;
         }
-        response.setCharacterEncoding("gbk");
         response.setContentType("application/json;charset=utf-8");
         response.setStatus(200);
         String resultJson = JSON.toJSONString(result);
