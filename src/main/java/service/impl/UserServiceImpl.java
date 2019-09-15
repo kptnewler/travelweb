@@ -13,7 +13,7 @@ public class UserServiceImpl implements UserService {
     public UserDao userDao = new UserDaoImpl();
     @Override
     public int register(final User user) {
-        User findUser = userDao.findUserByUsername(user.getUsername());
+        User findUser = userDao.findUserByUsernameOrEmail(user.getUsername(), user.getEmail());
         if (findUser != null) {
             if (findUser.getUsername().equals(user.getUsername())) {
                 return UserStatus.USER_EXISTS;
@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
             return UserStatus.REGISTER_SUCCEED;
         }
 
-        return UserStatus.LOGIN_SUCCEED;
+        return UserStatus.REGISTER_FAILED;
     }
 
     @Override
@@ -51,10 +51,6 @@ public class UserServiceImpl implements UserService {
         User user = userDao.findUserByPassword(username, password);
         if (user == null) {
             return UserStatus.USER_OR_PASSWORD;
-        }
-
-        if ("N".equals(user.getStatus())) {
-            return UserStatus.USER_NOT_ACTIVATION;
         }
 
         return UserStatus.LOGIN_SUCCEED;

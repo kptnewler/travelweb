@@ -9,21 +9,21 @@ public class Result<T> {
 
     private T data;// 成功时返回的数据
 
-    private String error;// 错误信息
+    private String msg;// 错误信息
 
     public Result() {
     }
 
     // 成功时的构造器
-    public Result(boolean success, T data) {
-        this.success = success;
+    public Result(T data) {
+        this.success = true;
         this.data = data;
     }
 
     // 错误时的构造器
-    public Result(boolean success, String error) {
-        this.success = success;
-        this.error = error;
+    public Result(String msg) {
+        this.success = false;
+        this.msg = msg;
     }
 
     public boolean isSuccess() {
@@ -42,17 +42,17 @@ public class Result<T> {
         this.data = data;
     }
 
-    public String getError() {
-        return error;
+    public String getMsg() {
+        return msg;
     }
 
-    public void setError(String error) {
-        this.error = error;
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
     @Override
     public String toString() {
-        return "JsonResult [success=" + success + ", data=" + data + ", error=" + error + "]";
+        return "JsonResult [success=" + success + ", data=" + data + ", error=" + msg + "]";
     }
 
 }
