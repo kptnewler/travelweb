@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <style>
+    .container {
+        background: url(images/login_bg.png);
+        width: 100%;
+        height: 732px;
+    }
+
     form {
         background: white;
         position: relative;
@@ -10,7 +16,7 @@
         position: absolute;
         right: 200px;
         top: 100px;
-        width: 300px;
+        width: 350px;
         height: 350px;
         background: white;
     }
@@ -28,103 +34,84 @@
         padding-bottom: 5px;
     }
 
-    .login-top span {
+    .layui-form>.layui-form-item {
         margin-top: 10px;
     }
 
-    .form-group {
-        margin-top: 10px;
-        width: 275px;
-        padding-left: 25px;
+    .layui-form-item> .layui-form-label {
+        padding: 9px 0;
+        width: 70px;
+        text-align: left;
+        margin-left: 30px;
     }
 
     #login-button {
-        width: 250px;
+        width: 200px;
+        margin: 10px auto;
+        display: block;
     }
 
-    .auto-login {
-        height: 20px;
-        margin-left: 25px;
+    .layui-form > .register {
+        margin: 20px auto;
+        display: block;
+        text-align: center;
     }
-
-    .auto-login>span {
-        vertical-align: top;
-    }
-
-    .error-msg {
-        margin-left: 25px;
-        margin-top: 10px;
-        font-size: 16px;
-        color: red;
-        display: inline-block;
-        visibility: collapse;
-    }
-
-    .register {
-        margin-left: 25px;
-    }
-
     #register-url {
-        text-decoration: none;
+        color: orange;
     }
-    a:hover {
-        text-decoration: none;
-    }
+
 </style>
 
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <title>Bootstrap 101 Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>登录页面</title>
 
-    <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-
+    <link href="layui/css/layui.css" rel="stylesheet">
 </head>
 <body>
 
-<div>
-    <img src="images/login_bg.png" alt="登录背景" width="100%" height="600px">
+<div class="container">
     <div class="login-group">
         <div class="login-top" style="background: orange">
             <img src="images/login_logo.png" alt="登录logo" class="login-logo">
             <span>智汇旅游网</span>
         </div>
-        <div>
-            <span class="error-msg">错误信息</span>
-        </div>
-        <form method="post">
-            <div class="form-group">
-                <input type="text" class="form-control" id="user-name" placeholder="请输入用户名">
+        <form method="post" class="layui-form" action="/login">
+            <div class="layui-form-item">
+                <label class="layui-form-label">用户名</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="username" class="layui-input" id="user-name" placeholder="请输入用户名">
+                </div>
             </div>
 
-            <div class="form-group">
-                <input type="password" class="form-control" id="password" placeholder="请输入密码">
+            <div class="layui-form-item">
+                <label class="layui-form-label">密码</label>
+                <div class="layui-input-inline">
+                    <input type="password" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                </div>
             </div>
 
-            <div class="auto-login">
-                <label>
-                    <input type="checkbox" class="checkbox">
-                </label>
-                <span  >自动登录</span>
+            <div class="layui-form-item">
+                <label class="layui-form-label">自动登录</label>
+                <div class="layui-input-inline">
+                    <input type="checkbox" name="switch" lay-skin="switch">
+                </div>
             </div>
 
-            <div class="form-group">
-                <button type="button" class="btn btn-primary"  id="login-button">登录</button>
-            </div>
+            <button type="button" class="layui-btn layui-btn layui-btn-normal" id="login-button">登录</button>
 
             <div class="register">
-                <span>没有账号？<a href="#" id="register-url">请立即注册</a></span>
+                <span>已有账号? &nbsp;&nbsp;&nbsp;<a href="#" id="register-url">请立即登录</a></span>
             </div>
         </form>
     </div>
 </div>
 
 <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
-<script src="js/jquery.min.js"></script>
+<script src="js/jquery-3.3.1.min.js"></script>
 <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
-<script src="js/bootstrap.min.js"></script>
+<script src="layui/layui.js"></script>
+<script src="js/login.js"></script>
 </body>
 </html>

@@ -1,0 +1,51 @@
+.bg{
+    width: 100%;
+    height: 500px;
+    background-image: url(../images/register_bg.png);
+    background-repeat: no-repeat;
+    background-size:100% 100%;
+    overflow: hidden;
+}
+
+.register_container {
+    background: white;
+    width:800px;
+    height: 400px;
+    margin: 50px auto;
+}
+
+.register_left {
+    padding-top: 20px;
+    padding-left: 25px;
+    float: left;
+}
+
+.register_left>p:first-child {
+    color: #FFB800;
+    font-size: 16px;
+}
+
+.register_left>p:last-child {
+    color: #9F9F9F;
+    font-style: italic;
+    font-size: 16px;
+}
+
+.register_container>.layui-form {
+    padding-top: 20px;
+    float: left;
+    padding-left: 50px;
+}
+
+#form-item {
+    display: block;
+}
+
+.register_right {
+    float: right;
+    padding-right: 25px;
+    padding-top: 25px;
+}
+.register_right>span>a {
+    color: red;
+}
