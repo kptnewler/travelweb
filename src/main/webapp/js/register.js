@@ -7,10 +7,6 @@ layui.use(['layer', 'form', 'laydate'], function(){
         elem: '#test1'
     });
 
-    form.on('summit(*)', function (data) {
-
-    });
-
     form.verify({
         username: function(value, item){ //value：表单的值、item：表单的DOM对象
             if(!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)){
@@ -31,6 +27,6 @@ layui.use(['layer', 'form', 'laydate'], function(){
                 return '密码必须包含数字和字母'
             }
         }
-    })
+    });
 
 });

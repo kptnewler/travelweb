@@ -5,30 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>智汇旅游网首页</title>
     <link href="layui/css/layui.css" rel="stylesheet">
-
+    <link href="css/index.css" rel="stylesheet">
+    <link href="css/header.css" rel="stylesheet">
 </head>
 <body>
-    <div>
-        <ul class="layui-nav" lay-filter="">
-            <li class="layui-nav-item">
-                <a href="">
-                    <img src="images/logo.jpg" class="layui-nav-img">智汇旅游
-                </a>
-            </li>
-            <li class="layui-nav-item"><a href="">最新活动</a></li>
-            <li class="layui-nav-item"><a href="">产品</a></li>
-            <li class="layui-nav-item"><a href="">大数据</a></li>
-            <li class="layui-nav-item">
-                <a href="javascript:;">解决方案</a>
-                <dl class="layui-nav-child"> <!-- 二级菜单 -->
-                    <dd><a href="">移动模块</a></dd>
-                    <dd><a href="">后台模版</a></dd>
-                    <dd><a href="">电商平台</a></dd>
-                </dl>
-            </li>
-            <li class="layui-nav-item"><a href="">社区</a></li>
-        </ul>
+<header></header>
+<div class="main">
+    <div class="selected-travel">
+        <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+            <div class="selected-travel-title">
+                <img src="images/icon_5.jpg">
+                <span>精选线路</span>
+            </div>
+            <ul class="layui-tab-title ">
+                <li class="layui-this">人气旅游</li>
+                <li>最新旅游</li>
+                <li>主题旅游</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">内容1</div>
+                <div class="layui-tab-item">内容2</div>
+                <div class="layui-tab-item">内容3</div>
+            </div>
+        </div>
     </div>
+
+</div>
 
 </body>
 <script src="js/jquery-3.3.1.min.js"></script>

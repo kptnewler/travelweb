@@ -1,0 +1,28 @@
+.header {
+    background: #393D49;
+    width: 100%;
+}
+.header-wrap {
+    width:750px;
+    height: 68px;
+    margin: 0 auto;
+}
+
+.header-wrap>.layui-nav {
+    float: left;
+    padding-top: 5px;
+}
+
+.layui-breadcrumb {
+    margin-left: 20px;
+    float: left;
+    position: relative;
+    top: 50%;
+    left: 50px;
+    margin-top: -9px;
+}
+
+#carousel > div > div > img {
+    width: 100%;
+    background-repeat: no-repeat;
+}

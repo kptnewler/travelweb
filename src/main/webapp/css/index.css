@@ -1,0 +1,37 @@
+
+.selected-travel {
+    width: 1080px;
+    height: 500px;
+    margin: 0 auto;
+
+}
+
+.selected-travel>.layui-tab {
+    float: left;
+    width: 1080px;
+}
+
+.selected-travel-title {
+    margin-top: 5px;
+    float: left;
+    border-bottom-width: 1px;
+    border-bottom: #00FFFF;
+}
+.selected-travel-title > span {
+    vertical-align: bottom;
+
+}
+.selected-travel>.layui-tab>.layui-tab-title>.layui-this {
+    color: #FFB800;
+}
+
+.selected-travel>.layui-tab>.layui-tab-title>li {
+    left: 100px;
+    padding: 0 25px;
+}
+
+.selected-travel>.layui-tab>.layui-tab-title>.layui-this:after {
+    border: none;
+    border-radius: 0;
+    border-bottom: 3px solid #FFB800;
+}

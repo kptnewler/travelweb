@@ -33,7 +33,6 @@ public class LoginServlet extends HttpServlet {
             case UserStatus.LOGIN_SUCCEED:
                 if (Boolean.parseBoolean(autoLogin))
                     saveCookie(request, response);
-
                 result = new Result<>("登录成功");
                 break;
             default:
