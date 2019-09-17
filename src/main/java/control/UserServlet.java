@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSON;
 import dataenum.UserStatus;
 import dto.Result;
 import model.User;
+import model.UserWrap;
 import org.apache.commons.beanutils.BeanUtils;
 import service.UserService;
 import service.impl.UserServiceImpl;
@@ -31,9 +32,10 @@ public class UserServlet extends BaseServlet {
         String password = request.getParameter("password");
         String autoLogin = request.getParameter("auto-login");
 
+        UserWrap userWrap = userService.login(username, password);
         @UserStatus
-        int userStatus = userService.login(username, password);
-        Result<String> result;
+        int userStatus = userWrap.getUserStatus();
+        Result<User> result;
         switch (userStatus) {
             case UserStatus.USER_NOT_EXISTS:
                 result = new Result<>("用户不存在");
@@ -42,29 +44,24 @@ public class UserServlet extends BaseServlet {
                 result = new Result<>("用户密码错误");
                 break;
             case UserStatus.LOGIN_SUCCEED:
-                if (Boolean.parseBoolean(autoLogin))
-                    saveCookie(request, response);
-
-                result = new Result<>("登录成功");
+                if (Boolean.parseBoolean(autoLogin)) {
+                    saveCookie(request, response, userWrap.getUser());
+                }
+                result = new Result<>(userWrap.getUser());
                 break;
             default:
                 result = new Result<>();
                 break;
         }
         response.setStatus(200);
-        result.setData("12312412412");
         String resultJson = JSON.toJSONString(result);
         response.setContentType("application/json;charset=utf-8");
         response.getWriter().println(resultJson);
     }
 
-    private void saveCookie(HttpServletRequest request, HttpServletResponse response) {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-
+    private void saveCookie(HttpServletRequest request, HttpServletResponse response, User user) {
         HttpSession httpSession = request.getSession();
-        httpSession.setAttribute("username", username);
-        httpSession.setAttribute("password", password);
+        httpSession.setAttribute("user", user);
         Cookie cookie = new Cookie("JSESSIONID", httpSession.getId());
         cookie.setMaxAge(3*24*60*60*1000);
         response.addCookie(cookie);
@@ -85,9 +82,10 @@ public class UserServlet extends BaseServlet {
             e.printStackTrace();
         }
 
+        UserWrap userWrap = userService.register(user);
         @UserStatus
-        int statusCode = userService.register(user);
-        Result<String> result;
+        int statusCode = userWrap.getUserStatus();
+        Result<User> result;
         switch (statusCode) {
             case UserStatus.USER_EXISTS:
                 result = new Result<>("用户名已存在");
@@ -100,7 +98,8 @@ public class UserServlet extends BaseServlet {
                 result = new Result<>("注册失败");
                 break;
             case UserStatus.REGISTER_SUCCEED:
-                result = new Result<>("注册成功");
+                result = new Result<>(userWrap.getUser());
+                saveCookie(request, response, user);
                 break;
             default:
                 result = new Result<>();
@@ -111,4 +110,17 @@ public class UserServlet extends BaseServlet {
         String resultJson = JSON.toJSONString(result);
         response.getOutputStream().write(resultJson.getBytes());
     }
-}
+
+    @WebUrl(url = "userinfo")
+    public void getUserInfo(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        HttpSession httpSession = request.getSession();
+        Result<User> result;
+        response.setStatus(200);
+        if (httpSession.getAttribute("user") == null) {
+            result = new Result<>("用户未登录");
+        } else {
+            result = new Result<User>((User) httpSession.getAttribute("user"));
+        }
+        response.getWriter().write(JSON.toJSONString(result));
+    }
+ }

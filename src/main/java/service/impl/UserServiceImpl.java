@@ -4,6 +4,7 @@ import dao.UserDao;
 import dao.impl.UserDaoImpl;
 import dataenum.UserStatus;
 import model.User;
+import model.UserWrap;
 import service.UserService;
 import utils.MailUtils;
 
@@ -12,14 +13,15 @@ import javax.mail.MessagingException;
 public class UserServiceImpl implements UserService {
     public UserDao userDao = new UserDaoImpl();
     @Override
-    public int register(final User user) {
+    public UserWrap register(final User user) {
+        UserWrap userWrap = new UserWrap();
         User findUser = userDao.findUserByUsernameOrEmail(user.getUsername(), user.getEmail());
         if (findUser != null) {
             if (findUser.getUsername().equals(user.getUsername())) {
-                return UserStatus.USER_EXISTS;
+                userWrap.setUserStatus(UserStatus.USER_EXISTS);
             }
             if (findUser.getEmail().equals(user.getEmail())) {
-                return UserStatus.EMAIL_EXISTS;
+                userWrap.setUserStatus(UserStatus.EMAIL_EXISTS);
             }
         }
 
@@ -36,22 +38,27 @@ public class UserServiceImpl implements UserService {
                     }
                 }
             }.start();
-            return UserStatus.REGISTER_SUCCEED;
+            userWrap.setUserStatus(UserStatus.REGISTER_SUCCEED);
         }
-
-        return UserStatus.REGISTER_FAILED;
+        userWrap.setUserStatus(UserStatus.REGISTER_FAILED);
+        return userWrap;
     }
 
     @Override
-    public int login(String username, String password) {
-        if (userDao.findUserByUsername(username) == null) {
-            return UserStatus.USER_NOT_EXISTS;
+    public UserWrap login(String username, String password) {
+        UserWrap userWrap = new UserWrap();
+        User user = userDao.findUserByUsername(username);
+        if (user == null) {
+            userWrap.setUserStatus(UserStatus.USER_NOT_EXISTS);
         }
 
-        if (userDao.findUserByPassword(username, password) == null) {
-            return UserStatus.USER_PASSWORD_ERROR;
+        user = userDao.findUserByPassword(username, password);
+        if (user == null) {
+            userWrap.setUserStatus(UserStatus.USER_PASSWORD_ERROR);
         }
 
-        return UserStatus.LOGIN_SUCCEED;
+        userWrap.setUser(user);
+        userWrap.setUserStatus(UserStatus.LOGIN_SUCCEED);
+        return userWrap;
     }
 }

@@ -1,9 +1,10 @@
 package service;
 
 import model.User;
+import model.UserWrap;
 
 public interface UserService {
-    int register(User user);
+    UserWrap register(User user);
 
-    int login(String username, String password);
+    UserWrap login(String username, String password);
 }

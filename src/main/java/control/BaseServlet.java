@@ -23,6 +23,7 @@ public class BaseServlet extends HttpServlet{
                 if (methodName.equals(method.getAnnotation(WebUrl.class).url())) {
                     try {
                         method.invoke(this, req, resp);
+                        break;
                     } catch (InvocationTargetException | IllegalAccessException e) {
                         e.printStackTrace();
                     }

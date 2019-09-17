@@ -29,4 +29,16 @@ layui.use(['layer', 'form', 'laydate'], function(){
         }
     });
 
+    form.on("summit(*)", function (data) {
+        $.post("/user/register", $("form").serialize(), function (data) {
+            if (data.success) {
+                layui.alert("注册成功");
+                location.href = "/user/index";
+            } else {
+                layui.alert(data.msg)
+            }
+        }, "json");
+        return false;
+    });
+
 });

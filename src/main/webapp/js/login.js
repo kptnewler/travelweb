@@ -11,7 +11,8 @@ layui.use(['layer', 'form'], function(){
             if (data.success === false) {
                 alert(data.msg)
             } else {
-                alert("登录成功")
+                alert("登录成功");
+                location.href = "/user/index";
             }
         }, "json");
     })
