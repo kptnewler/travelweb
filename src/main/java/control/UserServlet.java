@@ -33,6 +33,7 @@ public class UserServlet extends BaseServlet {
         String autoLogin = request.getParameter("auto-login");
 
         UserWrap userWrap = userService.login(username, password);
+
         @UserStatus
         int userStatus = userWrap.getUserStatus();
         Result<User> result;
