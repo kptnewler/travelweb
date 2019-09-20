@@ -15,6 +15,5 @@ public class ActiveCodeServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher("/login.html").forward(request, response);
-
     }
 }

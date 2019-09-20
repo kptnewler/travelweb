@@ -1,5 +1,5 @@
 layui.use(['element','carousel'], function(){
-    var element = layui.element,
+    let element = layui.element,
         carousel = layui.carousel;
     carousel.render({
         width:'100%',
@@ -7,6 +7,10 @@ layui.use(['element','carousel'], function(){
         elem: '#carousel'
         ,arrow: 'always'
     });
+    $(function () {
+        getCategories(element)
+    });
 });
+
 
 $("header").load("header.html");

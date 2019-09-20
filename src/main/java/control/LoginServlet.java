@@ -21,7 +21,7 @@ public class LoginServlet extends HttpServlet {
         String autoLogin = request.getParameter("auto-login");
 
         @UserStatus
-        int userStatus = userService.login(username, password);
+        int userStatus = userService.login(username, password).getUserStatus();
         Result<String> result;
         switch (userStatus) {
             case UserStatus.USER_NOT_EXISTS:
