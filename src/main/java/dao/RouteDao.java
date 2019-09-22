@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface RouteDao {
     List<Route> getPageRoutesByCid(String cid, int startIndex, int pageCount);
-    int getRoutesCountByCID(String cid);
+    int getRoutesCountByCid(String cid);
+    Route getRouteInfoById(String sid);
 }

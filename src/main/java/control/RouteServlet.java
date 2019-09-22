@@ -43,4 +43,16 @@ public class RouteServlet extends BaseServlet {
     public void routeAll(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher("/routelist.html").forward(request, response);
     }
+
+    @WebUrl(url = "detail")
+    public void routeDetail(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Route route = routeService.getRouteInfoById(request.getParameter("rid"));
+        Result<Route> result = new Result<>(route);
+        response.setContentType("application/json;charset=utf-8");
+        response.setStatus(200);
+        response.setCharacterEncoding("gbk");
+
+        String json = JSON.toJSONString(result);
+        response.getWriter().write(json);
+    }
 }
