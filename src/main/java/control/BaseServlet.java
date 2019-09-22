@@ -15,14 +15,15 @@ import java.util.regex.Pattern;
 public class BaseServlet extends HttpServlet{
 
     @Override
-    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String url = req.getRequestURI();
+    protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String url = request.getRequestURI();
         String methodName = url.substring(url.lastIndexOf("/")+1);
         for (Method method:getClass().getMethods()) {
             if (method.getAnnotation(WebUrl.class) != null) {
                 if (methodName.equals(method.getAnnotation(WebUrl.class).url())) {
                     try {
-                        method.invoke(this, req, resp);
+                        request.setCharacterEncoding("utf-8");
+                        method.invoke(this, request, response);
                         break;
                     } catch (InvocationTargetException | IllegalAccessException e) {
                         e.printStackTrace();
