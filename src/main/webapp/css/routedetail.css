@@ -1,0 +1,87 @@
+.main {
+    width: 1080px;
+    height: 100%;
+    margin: 0 auto;
+}
+
+.cover-group {
+    float: left;
+}
+
+.big-cover > img {
+    width: 400px;
+    height: 400px;
+}
+
+.small-cover {
+    margin-top: 15px;
+}
+
+.small-cover > ul > li {
+    float: left;
+}
+
+.small-cover > ul > li > img {
+    width: 50px;
+    height: 50px;
+    margin-right: 9px;
+    border: 2px solid #fff;
+}
+
+.info-group {
+    float: left;
+    margin-left: 20px;
+    width: 600px;
+}
+
+.info-group > p {
+    margin-top: 10px;
+    font-size: 13px;
+    color: #eb7350;
+}
+
+.info-group > h2 {
+    font-size: 20px;
+    color: #0C0C0C;
+    font-weight: bold;
+}
+
+.info-group > .seller-info {
+    background: #d6dae2;
+    padding-left: 12px;
+    margin-top: 10px;
+    padding-bottom: 10px;
+    overflow: hidden;
+    font-size: 13px;
+}
+
+.info-group > .seller-info > p {
+    margin-top: 10px;
+}
+
+.info-group > .price-info {
+    background: #d6dae2;
+    margin-top: 30px;
+    overflow: hidden;
+    padding-left: 12px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+.info-group > .price-info > span:first-child {
+    font-size: 26px;
+    font-weight: bold;
+    color: #eb7350;
+}
+
+.info-group > .price-info > .collect-group {
+    margin-top: 30px;
+}
+
+.info-group > .price-info > .collect-group > button:first-child {
+    background: red;
+}
+
+.info-group > .price-info > .collect-group > button:last-child {
+    background: #b7bac0;
+}
