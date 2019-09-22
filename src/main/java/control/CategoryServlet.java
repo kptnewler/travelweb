@@ -27,7 +27,8 @@ public class CategoryServlet extends BaseServlet {
         Result<List<Category>> categoryResult = new Result<>(categories);
         String json = JSON.toJSONString(categoryResult);
         response.setStatus(200);
-        response.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("gbk");
+        response.setContentType("application/json;charset=utf-8");
         response.getWriter().write(json);
     }
 }

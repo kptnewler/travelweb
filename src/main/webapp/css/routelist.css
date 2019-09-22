@@ -1,0 +1,104 @@
+.main {
+    width: 100%;
+    height: 1000px;
+}
+
+.route-wrap {
+    width: 1080px;
+    height: 100%;
+    margin: 0 auto;
+}
+
+.sales-content {
+    float: left;
+    width: 720px;
+}
+
+.route-item {
+    height: 200px;
+    width: 720px;
+}
+
+.route-item>.cover>img {
+    width: 240px;
+    height: 160px;
+    float: left;
+    margin-top: 20px;
+}
+
+.route-item>.detail {
+    float: left;
+    margin-left: 50px;
+    width: 400px;
+    margin-top: 20px;
+}
+
+.route-item>.detail>h3 {
+    font-weight: bold;
+}
+
+.route-item>.detail>p {
+    margin-top: 15px;
+}
+
+.price{
+    margin-top: 15px;
+}
+
+#route-page {
+    display: block;
+    width: auto;
+    margin: 20px auto;
+    position: relative;
+    left: 25%;
+}
+
+.price span:first-child {
+    color: #FFB800;
+    font-size: 30px;
+}
+.price span:nth-child(2) {
+    color: #FFB800;
+    font-size: 12px;
+}
+.price button:last-child {
+    position: relative;
+    left: 60%;
+}
+
+.route-hot {
+    float: left;
+    width: 360px;
+    box-sizing: border-box;
+    padding-left: 20px;
+    margin-top: 20px;
+}
+.route-hot>.route-hot-item {
+    margin-top: 20px;
+}
+
+.route-hot>.route-hot-item>.cover>img {
+    width: 120px;
+    height: 80px;
+    float: left;
+}
+
+.route-hot>.route-hot-item>.detail {
+    width: 150px;
+    float: left;
+    margin-left: 20px;
+}
+
+.route-hot>.route-hot-item>.detail>p {
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.route-hot>.route-hot-item>.detail>span {
+    color: #FFB800;
+    font-size: 12px;
+    display: inline-block;
+    margin-top: 20px;
+}
