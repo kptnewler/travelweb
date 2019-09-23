@@ -2,11 +2,16 @@ package dao.impl;
 
 import dao.RouteDao;
 import model.Route;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import utils.JDBCUtils;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Collection;
 import java.util.List;
 
 public class RouteDaoImpl implements RouteDao {
@@ -29,18 +34,10 @@ public class RouteDaoImpl implements RouteDao {
 
 
     @Override
-    public Route getRouteInfoById(String rid) {
-        List<Route> routes =  jdbcTemplate.query(
-                "SELECT DISTINCT * FROM tab_category, tab_seller, tab_route, tab_route_img" +
-                        " WHERE " +
-                        "tab_route.cid = tab_category.cid " +
-                        "AND " +
-                        "tab_seller.sid = tab_route.sid AND tab_route.rid = ? AND tab_route_img.rid = tab_route.rid"
-                , new Object[]{rid},
-                new BeanPropertyRowMapper<>(Route.class));
-        if (routes != null && !routes.isEmpty()) {
-            return routes.get(0);
-        }
-        return null;
+    public Route getRouteById(String rid) {
+        return DataAccessUtils.uniqueResult(jdbcTemplate.query("SELECT * FROM tab_route WHERE rid = ?",
+                new Object[]{rid},
+                new BeanPropertyRowMapper<>(Route.class))
+        );
     }
 }

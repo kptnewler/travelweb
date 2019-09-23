@@ -4,6 +4,7 @@ import annotation.WebUrl;
 import com.alibaba.fastjson.JSON;
 import dto.Page;
 import dto.Result;
+import dto.RouteDetails;
 import model.Route;
 import service.RouteService;
 import service.impl.RouteServiceImpl;
@@ -46,8 +47,8 @@ public class RouteServlet extends BaseServlet {
 
     @WebUrl(url = "detail")
     public void routeDetail(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Route route = routeService.getRouteInfoById(request.getParameter("rid"));
-        Result<Route> result = new Result<>(route);
+        RouteDetails routeDetails = routeService.getRouteInfoById(request.getParameter("rid"));
+        Result<RouteDetails> result = new Result<>(routeDetails);
         response.setContentType("application/json;charset=utf-8");
         response.setStatus(200);
         response.setCharacterEncoding("gbk");

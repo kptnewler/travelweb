@@ -21,12 +21,6 @@ public class Route implements Serializable {
     private int sid;//所属商家
     private String sourceId;//抓取数据的来源id
 
-    private Category category;//所属分类
-    private Seller seller;//所属商家
-    private List<RouteImg> routeImgList;//商品详情图片列表
-
-
-
     /**
      * 无参构造方法
      */
@@ -60,30 +54,6 @@ public class Route implements Serializable {
         this.rimage = rimage;
         this.sid = sid;
         this.sourceId = sourceId;
-    }
-
-    public List<RouteImg> getRouteImgList() {
-        return routeImgList;
-    }
-
-    public void setRouteImgList(List<RouteImg> routeImgList) {
-        this.routeImgList = routeImgList;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    public Seller getSeller() {
-        return seller;
-    }
-
-    public void setSeller(Seller seller) {
-        this.seller = seller;
     }
 
     public String getSourceId() {

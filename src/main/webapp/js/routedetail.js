@@ -20,20 +20,20 @@ layui.use(['layer'], function () {
     })
 });
 
-function showRouteDetail(route) {
-    $(".layui-breadcrumb:nth-child(2)").text(route.category.cname);
-    $(".layui-breadcrumb:nth-child(2)").attr("href", "/route/all?cid="+route.category.cid);
+function showRouteDetail(routeDetails) {
+    $(".layui-breadcrumb:nth-child(2)").text(routeDetails.category.cname);
+    $(".layui-breadcrumb:nth-child(2)").attr("href", "/routeDetails/all?cid="+routeDetails.category.cid);
 
-    $(".info-group>h2").text(route.routeIntroduce);
-    $(".info-group>p:first").text(route.rname);
-    $(".seller-company").text("旅行社："+route.seller.sname);
-    $(".seller-phone").text("咨询电话："+route.seller.consphone);
-    $(".seller-address").text("地址："+route.seller.address);
-    $(".price-info>span").text("￥"+route.price);
+    $(".info-group>h2").text(routeDetails.route.routeIntroduce);
+    $(".info-group>p:first").text(routeDetails.route.rname);
+    $(".seller-company").text("旅行社："+routeDetails.seller.sname);
+    $(".seller-phone").text("咨询电话："+routeDetails.seller.consphone);
+    $(".seller-address").text("地址："+routeDetails.seller.address);
+    $(".price-info>span:first").text("￥"+routeDetails.route.price);
 
     let li_img = "";
-    for (let i = 0; i < route.routeImgList.length; i++) {
-        let route_img = route.routeImgList[i];
+    for (let i = 0; i < routeDetails.routeImgList.length; i++) {
+        let route_img = routeDetails.routeImgList[i];
         if (i === 0) {
             li_img += "<li><img src=\""+route_img.smallPic+"\" class=\"small-cover-selected\" big-img=" + "route_img.bigPic></li>"
             $(".big-cover>img").attr("src", route_img.bigPic);
