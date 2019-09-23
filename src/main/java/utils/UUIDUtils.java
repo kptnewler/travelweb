@@ -10,7 +10,7 @@ public class UUIDUtils {
         return String.valueOf(UUID.randomUUID());
     }
 
-    private static String randomUUIDWithoutRod() {
+    public static String randomUUIDWithoutRod() {
         return randomUUID().replaceAll("-", "");
     }
 

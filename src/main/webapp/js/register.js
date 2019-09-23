@@ -29,7 +29,7 @@ layui.use(['layer', 'form', 'laydate'], function(){
         }
     });
 
-    form.on("summit(*)", function (data) {
+    form.on("summit(register)", function (data) {
         $.post("/user/register", $("form").serialize(), function (data) {
             if (data.success) {
                 layui.alert("注册成功");
@@ -40,5 +40,31 @@ layui.use(['layer', 'form', 'laydate'], function(){
         }, "json");
         return false;
     });
+
+    $("#send-verification-code").click(function (e) {
+        let email_text = $("#email").data("email");
+        if (email_text === null || email_text === "") {
+            alert("邮箱不能为空")
+        }
+        // 未被禁用
+        if ($(e.target).attr("disabled")) {
+            let time = 120;
+            let id = setInterval(function () {
+                if (time === 120) {
+                    $(e.target).attr("disabled", "disabled");
+                    // 发送请求
+                }
+                if (time === 0) {
+                    $(e.target).text("发送邮箱验证码");
+                    $(e.target).removeAttr("disabled");
+                    return
+                }
+                $(e.target).text(time--);
+            }, 1000);
+        } else {
+
+        }
+
+    })
 
 });

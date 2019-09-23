@@ -1,6 +1,6 @@
 .bg{
     width: 100%;
-    height: 500px;
+    height: 650px;
     background-image: url(../images/register_bg.png);
     background-repeat: no-repeat;
     background-size:100% 100%;
@@ -10,7 +10,7 @@
 .register_container {
     background: white;
     width:800px;
-    height: 400px;
+    height: 550px;
     margin: 50px auto;
 }
 
@@ -37,6 +37,11 @@
     padding-left: 50px;
 }
 
+.layui-form-item>.layui-input-inline>#send-verification-code {
+    display: inline;
+    margin-top: 10px;
+}
+
 #form-item {
     display: block;
 }
@@ -46,6 +51,7 @@
     padding-right: 25px;
     padding-top: 25px;
 }
+
 .register_right>span>a {
     color: red;
 }

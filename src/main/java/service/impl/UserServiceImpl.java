@@ -7,11 +7,13 @@ import model.User;
 import model.UserWrap;
 import service.UserService;
 import utils.MailUtils;
+import utils.UUIDUtils;
 
 import javax.mail.MessagingException;
 
 public class UserServiceImpl implements UserService {
     public UserDao userDao = new UserDaoImpl();
+
     @Override
     public UserWrap register(final User user) {
         UserWrap userWrap = new UserWrap();
@@ -26,18 +28,6 @@ public class UserServiceImpl implements UserService {
         }
 
         if (userDao.addUser(user)) {
-            new Thread() {
-                @Override
-                public void run() {
-                    try {
-                        String content = "<p>请点击下面链接激活账号，保证账号正常使用</p>" +
-                                "<p><a>http://localhost:8080/activecode</a></p>";
-                        MailUtils.sendMessage(user.getEmail(), "智汇旅游网激活账号", content);
-                    } catch (MessagingException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }.start();
             userWrap.setUserStatus(UserStatus.REGISTER_SUCCEED);
         }
         userWrap.setUserStatus(UserStatus.REGISTER_FAILED);
@@ -60,5 +50,24 @@ public class UserServiceImpl implements UserService {
         userWrap.setUser(user);
         userWrap.setUserStatus(UserStatus.LOGIN_SUCCEED);
         return userWrap;
+    }
+
+    @Override
+    public String sendVerificationCode(final String email) throws MessagingException {
+        final String code = UUIDUtils.randomUUIDWithoutRod();
+
+        String content = "<p>【智汇旅游网】验证码是：</p>" +
+                "<p>" + code + "</p>";
+        MailUtils.sendMessage(email, "智汇旅游网激活账号", content);
+
+        return code;
+    }
+
+    @Override
+    public boolean verifyCode(String userCode, String rightCode) {
+        if (userCode == null || rightCode == null) {
+            return false;
+        }
+        return userCode.equals(rightCode);
     }
 }

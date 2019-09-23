@@ -10,6 +10,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import service.UserService;
 import service.impl.UserServiceImpl;
 
+import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
@@ -123,5 +124,33 @@ public class UserServlet extends BaseServlet {
             result = new Result<User>((User) httpSession.getAttribute("user"));
         }
         response.getWriter().write(JSON.toJSONString(result));
+    }
+
+    @WebUrl(url = "sendVerificationCode")
+    public void sendVerificationCode(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
+        if ("POST".equals(request.getMethod())) {
+            final HttpSession httpSession = request.getSession();
+            final String email = request.getParameter("email");
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    String verificationCode = null;
+                    try {
+                        verificationCode = userService.sendVerificationCode(email);
+                        httpSession.setAttribute("verificationCode", verificationCode);
+                        Result<String> result = new Result<>(verificationCode);
+                        response.getWriter().write(JSON.toJSONString(result));
+                    } catch (MessagingException | IOException e) {
+                        e.printStackTrace();
+                        Result<String> result = new Result<>("邮件发送失败");
+                        try {
+                            response.getWriter().write(JSON.toJSONString(result));
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                }
+            }).start();
+        }
     }
  }
