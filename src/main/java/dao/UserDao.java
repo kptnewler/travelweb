@@ -4,7 +4,7 @@ import model.User;
 
 public interface UserDao {
     User findUserByPassword(String username, String password);
-    boolean addUser(User user);
+    boolean addUser(User user, String password);
     User findUserByUsername(String username);
     User findUserByEmail(String email);
     User findUserByUsernameOrEmail(String username, String email);

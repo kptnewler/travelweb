@@ -22,7 +22,6 @@ public class BaseServlet extends HttpServlet{
             if (method.getAnnotation(WebUrl.class) != null) {
                 if (methodName.equals(method.getAnnotation(WebUrl.class).url())) {
                     try {
-                        request.setCharacterEncoding("utf-8");
                         method.invoke(this, request, response);
                         break;
                     } catch (InvocationTargetException | IllegalAccessException e) {

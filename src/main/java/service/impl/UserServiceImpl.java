@@ -15,20 +15,23 @@ public class UserServiceImpl implements UserService {
     public UserDao userDao = new UserDaoImpl();
 
     @Override
-    public UserWrap register(final User user) {
+    public UserWrap register(final User user, String password) {
         UserWrap userWrap = new UserWrap();
         User findUser = userDao.findUserByUsernameOrEmail(user.getUsername(), user.getEmail());
         if (findUser != null) {
             if (findUser.getUsername().equals(user.getUsername())) {
                 userWrap.setUserStatus(UserStatus.USER_EXISTS);
+                return userWrap;
             }
             if (findUser.getEmail().equals(user.getEmail())) {
                 userWrap.setUserStatus(UserStatus.EMAIL_EXISTS);
+                return userWrap;
             }
         }
 
-        if (userDao.addUser(user)) {
+        if (userDao.addUser(user, password)) {
             userWrap.setUserStatus(UserStatus.REGISTER_SUCCEED);
+            return userWrap;
         }
         userWrap.setUserStatus(UserStatus.REGISTER_FAILED);
         return userWrap;
@@ -40,11 +43,13 @@ public class UserServiceImpl implements UserService {
         User user = userDao.findUserByUsername(username);
         if (user == null) {
             userWrap.setUserStatus(UserStatus.USER_NOT_EXISTS);
+            return userWrap;
         }
 
         user = userDao.findUserByPassword(username, password);
         if (user == null) {
             userWrap.setUserStatus(UserStatus.USER_PASSWORD_ERROR);
+            return userWrap;
         }
 
         userWrap.setUser(user);

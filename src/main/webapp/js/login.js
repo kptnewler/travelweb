@@ -8,11 +8,13 @@ layui.use(['layer', 'form'], function(){
 
     $(".layui-btn").click(function () {
         $.post("/user/login", $("form").serialize(), function (data) {
+            console.info(JSON.stringify(data));
+
             if (data.success === false) {
-                alert(data.msg)
+                alert(data.msg);
             } else {
                 alert("登录成功");
-                location.href = "/user/index";
+                location.href = "/";
             }
         }, "json");
     })

@@ -6,7 +6,7 @@ import model.UserWrap;
 import javax.mail.MessagingException;
 
 public interface UserService {
-    UserWrap register(User user);
+    UserWrap register(User user, String password);
 
     UserWrap login(String username, String password);
 

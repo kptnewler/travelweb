@@ -16,15 +16,18 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User findUserByPassword(String username, String password) {
-        return jdbcTemplate.queryForObject("SELECT * FROM travel.tab_user " +
-                "WHERE travel.tab_user.username=? AND travel.tab_user.password=?", new Object[]{username, password}, User.class);
+        return DataAccessUtils.uniqueResult(jdbcTemplate.query("SELECT * FROM travel.tab_user " +
+                "WHERE travel.tab_user.username=? AND travel.tab_user.password=?", new Object[]{username, password},
+                new BeanPropertyRowMapper<>(User.class)));
     }
 
     @Override
-    public boolean addUser(User user) {
+    public boolean addUser(User user, String password) {
         int count = jdbcTemplate.update("INSERT INTO" +
                 " travel.tab_user(username, password, name, birthday, sex, telephone, email) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?)");
+                "VALUES (?, ?, ?, ?, ?, ?, ?)",
+                user.getUsername(), password, user.getName(),
+                user.getBirthday(), user.getSex(), user.getTelephone(), user.getEmail());
         return count != 0;
     }
 

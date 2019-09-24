@@ -38,8 +38,8 @@
 }
 
 .layui-form-item>.layui-input-inline>#send-verification-code {
-    display: inline;
     margin-top: 10px;
+    width: 135px;
 }
 
 #form-item {

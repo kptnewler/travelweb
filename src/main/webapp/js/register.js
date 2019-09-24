@@ -4,7 +4,7 @@ layui.use(['layer', 'form', 'laydate'], function(){
         date = layui.laydate;
 
     date.render({
-        elem: '#test1'
+        elem: '#date'
     });
 
     form.verify({
@@ -20,51 +20,60 @@ layui.use(['layer', 'form', 'laydate'], function(){
             }
         },
         password: function (value, item) {
-            if (!new RegExp("^[\S]{6,12}$").test(value)) {
-                return '密码必须为6-12位'
-            }
-            if (!new RegExp("^([\s]{6,12} | [0-9]{6,12})")) {
-                return '密码必须包含数字和字母'
+            if (!new RegExp("^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,12}$")) {
+                return '密码为6-12位，必须包含数字和字母'
             }
         }
     });
 
-    form.on("summit(register)", function (data) {
+
+    form.on('submit(*)', function (data) {
         $.post("/user/register", $("form").serialize(), function (data) {
             if (data.success) {
-                layui.alert("注册成功");
-                location.href = "/user/index";
+                alert("注册成功，跳转登录");
+                location.href = "/user/login";
             } else {
-                layui.alert(data.msg)
+                alert(data.msg)
             }
         }, "json");
-        return false;
+        return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
     });
 
     $("#send-verification-code").click(function (e) {
-        let email_text = $("#email").data("email");
+        let email_text = $("#email").val();
         if (email_text === null || email_text === "") {
-            alert("邮箱不能为空")
+            alert("邮箱不能为空");
+            return
         }
         // 未被禁用
-        if ($(e.target).attr("disabled")) {
-            let time = 120;
-            let id = setInterval(function () {
-                if (time === 120) {
-                    $(e.target).attr("disabled", "disabled");
-                    // 发送请求
+        if ($(e.target).attr("disabled") === undefined) {
+            let time = 5;
+            // 发送请求
+            $.post("/user/sendVerificationCode", {email:email_text}, function (result) {
+                alert(JSON.stringify(result));
+                if (result.success) {
+                    timeDown(e, time);
+                } else {
+                    alert("邮件发送失败");
                 }
-                if (time === 0) {
-                    $(e.target).text("发送邮箱验证码");
-                    $(e.target).removeAttr("disabled");
-                    return
-                }
-                $(e.target).text(time--);
-            }, 1000);
-        } else {
-
+            });
         }
-
+        return false;
     })
 
 });
+
+function timeDown(e, time) {
+    $(e.target).attr("disabled", "disabled");
+    $(e.target).addClass("layui-btn-disabled");
+    let id = setInterval(function () {
+        if (time === 0) {
+            $(e.target).text("发送邮箱验证码");
+            $(e.target).removeAttr("disabled");
+            $(e.target).removeClass("layui-btn-disabled");
+            clearInterval(id);
+            return
+        }
+        $(e.target).text(time--+" 秒后重发");
+    }, 1000);
+}
