@@ -1,13 +1,7 @@
 package service.impl;
 
-import dao.CategoryDao;
-import dao.RouteDao;
-import dao.RouteImgDao;
-import dao.SellerDao;
-import dao.impl.CategoryDaoImpl;
-import dao.impl.RouteDaoImpl;
-import dao.impl.RouteImgDaoImpl;
-import dao.impl.SellerDaoImpl;
+import dao.*;
+import dao.impl.*;
 import dto.Page;
 import dto.RouteDetails;
 import model.Category;
@@ -23,10 +17,11 @@ public class RouteServiceImpl implements RouteService {
     private SellerDao sellerDao = new SellerDaoImpl();
     private RouteImgDao routeImgDao = new RouteImgDaoImpl();
     private CategoryDao categoryDao = new CategoryDaoImpl();
+    private FavoriteDao favoriteDao = new FavoriteDaoImpl();
 
     @Override
     public Page<Route> getRoutesByCid(String cid, int currentPage, int pageSize) {
-        int startIndex = (currentPage-1) * pageSize;
+        int startIndex = (currentPage - 1) * pageSize;
         Page<Route> routePage = new Page<>();
         int totalCount = routeDao.getRoutesCountByCid(cid);
         routePage.setCurrentPage(currentPage);
@@ -42,18 +37,18 @@ public class RouteServiceImpl implements RouteService {
             System.out.println(route.toString());
         }
         routePage.setDataList(routes);
-        int totalPage = totalCount % pageSize == 0 ? (totalCount / pageSize) : (totalCount / pageSize)+1;
+        int totalPage = totalCount % pageSize == 0 ? (totalCount / pageSize) : (totalCount / pageSize) + 1;
         routePage.setTotalPage(totalPage);
         return routePage;
     }
 
     @Override
     public RouteDetails getRouteInfoById(String rid) {
-       RouteDetails routeDetails = new RouteDetails();
-       Route route = routeDao.getRouteById(rid);
-       if (route == null) {
-           return null;
-       }
+        RouteDetails routeDetails = new RouteDetails();
+        Route route = routeDao.getRouteById(rid);
+        if (route == null) {
+            return null;
+        }
         Category category = categoryDao.getCategoryByCid(String.valueOf(route.getCid()));
         Seller seller = sellerDao.getSeller(String.valueOf(route.getSid()));
         List<RouteImg> routeImgs = routeImgDao.getRouteImgs(String.valueOf(route.getRid()));
@@ -64,5 +59,17 @@ public class RouteServiceImpl implements RouteService {
         routeDetails.setSeller(seller);
 
         return routeDetails;
+    }
+
+    @Override
+    public Route collectRoute(String rid, String uid) {
+        boolean isAdded = favoriteDao.addFavoriteRoute(rid, uid);
+        Route route = null;
+        if (isAdded) {
+            route = routeDao.updateRouteCollectCount(rid);
+            return route;
+        } else {
+            return null;
+        }
     }
 }

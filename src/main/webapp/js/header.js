@@ -27,7 +27,7 @@ function getCategories(element) {
                     "                    <dd><a href=\"#\">修改信息</a></dd>\n" +
                     "                    <dd><a href=\"#\">安全管理</a></dd>\n" +
                     "                    <dd><a href=\"#\">激活账号</a></dd>\n" +
-                    "                    <dd><a href=\"\\user\\logout\" id='login-out'>退出登录</a></dd>\n" +
+                    "                    <dd id='login-out'><a href=\"\\user\\logout\">退出登录</a></dd>\n" +
                     "                </dl>\n" +
                     "            </li>";
                 nav_items += user_login_item;
@@ -39,12 +39,6 @@ function getCategories(element) {
         }
     });
 
-    $(function () {
-        $("#login-out").click(function () {
-            $.post("/user/logout","", function () {
-            },"text")
-        })
-    })
 }
 
 

@@ -185,20 +185,24 @@ public class UserServlet extends BaseServlet {
     public void logout(final HttpServletRequest request, final HttpServletResponse response) throws IOException, ServletException {
         if (request.getMethod().equals("GET")) {
             Cookie[] cookies = request.getCookies();
-            System.out.println("退出登录");
             HttpSession httpSession = request.getSession();
             for (Cookie cookie : cookies) {
                 if ("username".equals(cookie.getName())) {
-                    cookie.setMaxAge(0);
+                    Cookie deleteUsernameCookie = new Cookie(cookie.getName(), cookie.getValue());
+                    deleteUsernameCookie.setMaxAge(0);
+                    deleteUsernameCookie.setPath("/");
+                    response.addCookie(deleteUsernameCookie);
                 }
                 if (httpSession.getId().equals(cookie.getValue())) {
-                    cookie.setMaxAge(0);
+                    Cookie deleteSessionIdCookie = new Cookie(cookie.getName(), cookie.getValue());
+                    deleteSessionIdCookie.setMaxAge(0);
+                    deleteSessionIdCookie.setPath("/");
+                    response.addCookie(deleteSessionIdCookie);
                 }
             }
             httpSession.invalidate();
             System.out.println("退出登录");
             request.getRequestDispatcher("/user/login").forward(request, response);
         }
-
     }
 }

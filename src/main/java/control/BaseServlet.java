@@ -13,10 +13,14 @@ import java.lang.reflect.Method;
 import java.util.regex.Pattern;
 
 public class BaseServlet extends HttpServlet{
-
+    int user =20;
+    public void f() {
+        int user = 30;
+    }
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String url = request.getRequestURI();
+
         String methodName = url.substring(url.lastIndexOf("/")+1);
         for (Method method:getClass().getMethods()) {
             if (method.getAnnotation(WebUrl.class) != null) {

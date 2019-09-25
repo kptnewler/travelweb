@@ -6,14 +6,18 @@ import dto.Page;
 import dto.Result;
 import dto.RouteDetails;
 import model.Route;
+import model.User;
 import service.RouteService;
 import service.impl.RouteServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.SQLException;
 
 @WebServlet(urlPatterns = "/route/*")
 public class RouteServlet extends BaseServlet {
@@ -53,6 +57,27 @@ public class RouteServlet extends BaseServlet {
         response.setStatus(200);
         response.setCharacterEncoding("gbk");
 
+        String json = JSON.toJSONString(result);
+        response.getWriter().write(json);
+    }
+
+    @WebUrl(url = "collect")
+    public void collectRoute(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+        String rid = request.getParameter("rid");
+        Cookie[] cookies = request.getCookies();
+        HttpSession httpSession = request.getSession();
+        Result<Route> result;
+        User user = (User) httpSession.getAttribute("user");
+        if (user != null) {
+            Route route = routeService.collectRoute(String.valueOf(user.getUid()), rid);
+            if (route == null) {
+                result = new Result<>("收藏失败");
+            } else {
+                result = new Result<>(route);
+            }
+        } else {
+            result = new Result<>("请登录后重试");
+        }
         String json = JSON.toJSONString(result);
         response.getWriter().write(json);
     }

@@ -7,8 +7,12 @@ import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.jdbc.datasource.DataSourceUtils;
+import org.springframework.transaction.annotation.Transactional;
 import utils.JDBCUtils;
 
+import javax.sql.DataSource;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
@@ -40,4 +44,16 @@ public class RouteDaoImpl implements RouteDao {
                 new BeanPropertyRowMapper<>(Route.class))
         );
     }
+
+    @Override
+    public Route updateRouteCollectCount(String rid) {
+        int count = jdbcTemplate.update("UPDATE tab_route SET tab_route.count = (SELECT count WHERE rid = ?)+1 WHERE rid = ?", rid, rid);
+        if (count == 1) {
+            return getRouteById(rid);
+        } else {
+            return null;
+        }
+    }
+
+
 }
