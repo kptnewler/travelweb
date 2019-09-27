@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
     public UserWrap login(String username, String password) {
         UserWrap userWrap = new UserWrap();
         User user = userDao.findUserByUsername(username);
-        if (user == null) {
+            if (user == null) {
             userWrap.setUserStatus(UserStatus.USER_NOT_EXISTS);
             return userWrap;
         }

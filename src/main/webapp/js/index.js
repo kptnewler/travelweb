@@ -8,9 +8,8 @@ layui.use(['element','carousel'], function(){
         ,arrow: 'always'
     });
     $(function () {
-        getCategories(element)
+        getCategories(element, 0)
     });
 });
-
 
 $("header").load("header.html");

@@ -14,6 +14,6 @@ public class RouteServiceImplTest {
     }
     @Test
     public void collectRoute() throws SQLException {
-        routeService.collectRoute("2", "2");
+        routeService.collectRoute("1", "10");
     }
 }

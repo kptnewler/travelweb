@@ -13,7 +13,7 @@
     padding-top: 5px;
 }
 
-.layui-breadcrumb {
+#header-breadcrumb {
     margin-left: 20px;
     float: left;
     position: relative;

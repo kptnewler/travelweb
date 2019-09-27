@@ -43,7 +43,7 @@ public class RouteServiceImpl implements RouteService {
     }
 
     @Override
-    public RouteDetails getRouteInfoById(String rid) {
+    public RouteDetails getRouteInfoById(String rid, String uid) {
         RouteDetails routeDetails = new RouteDetails();
         Route route = routeDao.getRouteById(rid);
         if (route == null) {
@@ -52,11 +52,16 @@ public class RouteServiceImpl implements RouteService {
         Category category = categoryDao.getCategoryByCid(String.valueOf(route.getCid()));
         Seller seller = sellerDao.getSeller(String.valueOf(route.getSid()));
         List<RouteImg> routeImgs = routeImgDao.getRouteImgs(String.valueOf(route.getRid()));
+        boolean isCollected = false;
+        if (uid != null && !uid.isEmpty()) {
+            isCollected = favoriteDao.isCollectRouteByUser(rid, uid);
+        }
 
         routeDetails.setCategory(category);
         routeDetails.setRoute(route);
         routeDetails.setRouteImgList(routeImgs);
         routeDetails.setSeller(seller);
+        routeDetails.setCollected(isCollected);
 
         return routeDetails;
     }
@@ -66,10 +71,20 @@ public class RouteServiceImpl implements RouteService {
         boolean isAdded = favoriteDao.addFavoriteRoute(rid, uid);
         Route route = null;
         if (isAdded) {
-            route = routeDao.updateRouteCollectCount(rid);
-            return route;
-        } else {
-            return null;
+            int count = routeDao.getRouteCollectCount(rid);
+            route = routeDao.updateRouteCollectCount(rid, count+1);
         }
+        return route;
+    }
+
+    @Override
+    public Route unCollectRoute(String rid, String uid) {
+        boolean isDeleted = favoriteDao.deleteFavoriteRoute(rid, uid);
+        Route route = null;
+        if (isDeleted) {
+            int count = routeDao.getRouteCollectCount(rid);
+            route = routeDao.updateRouteCollectCount(rid, count -1 );
+        }
+        return route;
     }
 }

@@ -10,6 +10,7 @@ import model.User;
 import service.RouteService;
 import service.impl.RouteServiceImpl;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -51,7 +52,21 @@ public class RouteServlet extends BaseServlet {
 
     @WebUrl(url = "detail")
     public void routeDetail(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        RouteDetails routeDetails = routeService.getRouteInfoById(request.getParameter("rid"));
+        HttpSession httpSession = request.getSession();
+        User user = (User) httpSession.getAttribute("user");
+        String rid = request.getParameter("rid");
+        String uid = "";
+        if (user != null) {
+            uid = String.valueOf(user.getUid());
+        }
+        if (rid == null || rid.isEmpty()) {
+            Result<String> result = new Result<>("路线ID不能为空");
+            response.getWriter().write(JSON.toJSONString(result));
+            return;
+        }
+
+
+        RouteDetails routeDetails = routeService.getRouteInfoById(rid, uid);
         Result<RouteDetails> result = new Result<>(routeDetails);
         response.setContentType("application/json;charset=utf-8");
         response.setStatus(200);
@@ -62,22 +77,49 @@ public class RouteServlet extends BaseServlet {
     }
 
     @WebUrl(url = "collect")
-    public void collectRoute(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+    public void collectRoute(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
         String rid = request.getParameter("rid");
         Cookie[] cookies = request.getCookies();
         HttpSession httpSession = request.getSession();
         Result<Route> result;
         User user = (User) httpSession.getAttribute("user");
         if (user != null) {
-            Route route = routeService.collectRoute(String.valueOf(user.getUid()), rid);
+            Route route = routeService.collectRoute(rid,String.valueOf(user.getUid()));
             if (route == null) {
                 result = new Result<>("收藏失败");
             } else {
                 result = new Result<>(route);
             }
         } else {
-            result = new Result<>("请登录后重试");
+            result = new Result<>("请先登录");
         }
+        response.setContentType("application/json;charset=utf-8");
+        response.setStatus(200);
+        response.setCharacterEncoding("gbk");
+        String json = JSON.toJSONString(result);
+        response.getWriter().write(json);
+    }
+
+    @WebUrl(url = "cancel-collect")
+    public void cancelCollectRoute (HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
+        String rid = request.getParameter("rid");
+        HttpSession httpSession = request.getSession();
+        Result<Route> result;
+        User user = (User) httpSession.getAttribute("user");
+
+        if (user != null) {
+            Route route = routeService.unCollectRoute(rid, String.valueOf(user.getUid()));
+            if (route == null) {
+                result = new Result<>("取消收藏失败");
+            } else {
+                result = new Result<>(route);
+            }
+        } else {
+            result = new Result<>("请先登录");
+        }
+        response.setContentType("application/json;charset=utf-8");
+        response.setStatus(200);
+        response.setCharacterEncoding("gbk");
         String json = JSON.toJSONString(result);
         response.getWriter().write(json);
     }

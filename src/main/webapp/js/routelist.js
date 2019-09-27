@@ -1,9 +1,8 @@
 
-layui.use(['layer', 'laypage'], function () {
+layui.use(['layer', 'laypage','element'], function () {
     let layer = layui.layer,
-        laypage = layui.laypage;
-    var count = 1;
-
+        laypage = layui.laypage,
+        element = layui.element;
     $(function () {
         $.getJSON("/route/list", {cid: getQueryString("cid")}, function (result) {
             if (result.success) {
@@ -26,10 +25,12 @@ layui.use(['layer', 'laypage'], function () {
             } else {
                 alert(result.msg)
             }
-        })
-    })
-});
+        });
 
+        getCategories(element, 2);
+    });
+    $("header").load("header.html");
+});
 function showRouteItems(routeItems) {
     console.log(routeItems.length);
     let route_list = "";
@@ -41,12 +42,11 @@ function showRouteItems(routeItems) {
         "        <h3>" + routeItems[i].rname + "</h3>\n" +
         "           <p>" + routeItems[i].routeIntroduce + "</p>\n" +
         "             <div class=\"price\"><span>" + routeItems[i].price + "</span><span>起</span>\n" +
-        "                 <button type=\"button\" class=\" layui-btn layui-btn-warm\">立即预定</button></div>" +
+        "             <button type=\"button\" class=\"layui-btn layui-btn-warm\"><a href=\"\\routedetail.html?rid="+routeItems[i].rid+"\">立即预定</a></button></div>\n   " +
         "       </div>\n" +
         " </div>";
         route_list += route_item_html;
     }
     $(".route-list").html(route_list);
-    window.scrollTo(0)
 }
 

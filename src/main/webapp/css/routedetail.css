@@ -5,6 +5,14 @@
     overflow: hidden;
 }
 
+.crumb {
+   box-sizing: border-box;
+    padding-top: 20px;
+    height: 50px;
+}
+
+
+
 .info-wrap {
     border: 1px solid silver;
     width: 100%;
@@ -90,8 +98,12 @@
     margin-top: 30px;
 }
 
-.info-group > .price-info > .collect-group > button:first-child {
+.collect-btn {
     background: red;
+}
+
+.cancel-collect-btn {
+    background: #c0c4cc;
 }
 
 .info-group > .price-info > .collect-group > button:last-child {

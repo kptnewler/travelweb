@@ -46,8 +46,8 @@ public class RouteDaoImpl implements RouteDao {
     }
 
     @Override
-    public Route updateRouteCollectCount(String rid) {
-        int count = jdbcTemplate.update("UPDATE tab_route SET tab_route.count = (SELECT count WHERE rid = ?)+1 WHERE rid = ?", rid, rid);
+    public Route updateRouteCollectCount(String rid, int collectCount) {
+        int count = jdbcTemplate.update("UPDATE tab_route SET tab_route.count = ? WHERE rid = ?", collectCount, rid);
         if (count == 1) {
             return getRouteById(rid);
         } else {
@@ -55,5 +55,8 @@ public class RouteDaoImpl implements RouteDao {
         }
     }
 
-
+    @Override
+    public int getRouteCollectCount(String rid) {
+        return jdbcTemplate.queryForInt("SELECT count FROM tab_route WHERE rid = ?", rid);
+    }
 }

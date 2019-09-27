@@ -8,13 +8,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link type="text/css" rel="stylesheet" href="layui/css/layui.css">
     <link type="text/css" rel="stylesheet" href="css/routedetail.css">
+    <link type="text/css" rel="stylesheet" href="css/header.css">
 </head>
+
 <body>
+<div class="header">
+    <div class="header-wrap">
+        <ul class="layui-nav" lay-filter="">
+
+
+        </ul>
+        <span class="layui-breadcrumb" id="header-breadcrumb" lay-separator="|" hidden>
+                <a href="/login.html">登录</a>
+                <a href="/register.html">注册</a>
+        </span>
+    </div>
+</div>
 <div class="main">
     <div class="detail-container">
         <div class="crumb">
-                <span class="layui-breadcrumb" lay-separator=">">
-                    <a href="">首页</a>
+                <span class="layui-breadcrumb" id="record-breadcrumb" lay-separator=">">
+                    <a href="/">首页</a>
                     <a href=""></a>
                 </span>
         </div>
@@ -47,8 +61,8 @@
                 <div class="price-info">
                     <span>￥2699.00</span><span>起</span>
                     <div class="collect-group">
-                        <button class="layui-btn">点击收藏</button>
-                        <button class="layui-btn">取消收藏</button>
+                        <button class="layui-btn collect-btn">点击收藏</button>
+                        <span class="collect-count">已收藏100份</span>
                     </div>
                 </div>
             </div>

@@ -12,7 +12,7 @@ public class RouteDetails {
     private Category category;//所属分类
     private Seller seller;//所属商家
     private List<RouteImg> routeImgList;//商品详情图片列表
-
+    private boolean collected;// 是否被收藏
     /**
      * 无参构造方法
      */
@@ -49,6 +49,14 @@ public class RouteDetails {
 
     public void setRoute(Route route) {
         this.route = route;
+    }
+
+    public boolean getCollected() {
+        return collected;
+    }
+
+    public void setCollected(boolean collected) {
+        this.collected = collected;
     }
 }
 

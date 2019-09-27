@@ -10,12 +10,12 @@ function getCookie(cname) {
     return "";
 }
 
-function getCategories(element) {
+function getCategories(element, index) {
     $.getJSON("/category/getAll", function (result) {
         if (result.success) {
-            let nav_items = "<li class=layui-nav-item><a href=''>首页</a></li>\n";
+            let nav_items = "<li class=\"layui-nav-item\"><a href=\"\\\">首页</a></li>\n";
             for (let i = 0; i < result.data.length; i++) {
-                nav_items += "<li class=layui-nav-item><a href=''>" + result.data[i].cname + "</a></li>";
+                nav_items += "<li class=layui-nav-item><a href=\"\\route\\all?cid="+result.data[i].cid+"\">" + result.data[i].cname + "</a></li>";
             }
             let username = getCookie("username");
             if (username.length === 0) {

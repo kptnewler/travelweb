@@ -2,6 +2,7 @@ package control;
 
 import annotation.WebUrl;
 import com.alibaba.fastjson.JSON;
+import com.sun.mail.iap.Response;
 import dataenum.UserStatus;
 import dto.Result;
 import model.User;
@@ -55,9 +56,9 @@ public class UserServlet extends BaseServlet {
                 break;
             case UserStatus.LOGIN_SUCCEED:
                 if (autoLogin) {
-                    saveCookie(request, response, userWrap.getUser(), 3 * 24 * 60 * 60);
+                    saveCookie(request, response, userWrap.getUser(), password,3 * 24 * 60 * 60);
                 } else {
-                    saveCookie(request, response, userWrap.getUser(), -1);
+                    saveCookie(request, response, userWrap.getUser(), password,-1);
                 }
                 result = new Result<>(userWrap.getUser());
                 break;
@@ -71,10 +72,15 @@ public class UserServlet extends BaseServlet {
         response.getWriter().println(resultJson);
     }
 
-    private void saveCookie(HttpServletRequest request, HttpServletResponse response, User user, int maxage) {
+    private void saveCookie(HttpServletRequest request, HttpServletResponse response, User user, String password,int maxage) {
         HttpSession httpSession = request.getSession();
         httpSession.setAttribute("user", user);
-        Cookie cookie = new Cookie("username", user.getUsername());
+        addCookie("username", user.getUsername(), maxage, response);
+        addCookie("password", password, maxage, response);
+    }
+
+    private void addCookie(String name, String value, int maxage, HttpServletResponse response) {
+        Cookie cookie = new Cookie(name, value);
         cookie.setPath("/");
         cookie.setMaxAge(maxage);
         response.addCookie(cookie);

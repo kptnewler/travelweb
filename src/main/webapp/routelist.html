@@ -8,14 +8,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link type="text/css" rel="stylesheet" href="css/routelist.css">
     <link type="text/css" rel="stylesheet" href="layui/css/layui.css">
+    <link type="text/css" rel="stylesheet" href="css/header.css">
 </head>
 <body>
+<div class="header">
+    <div class="header-wrap">
+        <ul class="layui-nav" lay-filter="">
+
+
+        </ul>
+        <span class="layui-breadcrumb" id="header-breadcrumb" lay-separator="|" hidden>
+                <a href="/login.html">登录</a>
+                <a href="/register.html">注册</a>
+        </span>
+    </div>
+</div>
+
 <div class="main">
     <div class="route-wrap">
         <div class="sales-content">
             <div class="route-list">
             </div>
-
             <div id="route-page"></div>
         </div>
         <div class="route-hot">
